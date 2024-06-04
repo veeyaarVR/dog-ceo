@@ -3,6 +3,10 @@ import 'package:dog_ceo/features/dog/data/data_sources/remote/dog_remote_source.
 import 'package:dog_ceo/features/dog/data/repositories/dog_repository_impl.dart';
 import 'package:dog_ceo/features/dog/domain/repositories/dog_repository.dart';
 import 'package:dog_ceo/features/dog/presentation/bloc/dog_bloc.dart';
+import 'package:dog_ceo/features/image/data/repositories/image_repository_impl.dart';
+import 'package:dog_ceo/features/image/data/sources/remote/image_remote_source.dart';
+import 'package:dog_ceo/features/image/domain/repositories/image_repository.dart';
+import 'package:dog_ceo/features/image/presentation/bloc/image_bloc.dart';
 import 'package:dog_ceo/features/subBreed/data/repositories/sub_breed_repository_impl.dart';
 import 'package:dog_ceo/features/subBreed/data/sources/remote/sub_breed_network_source.dart';
 import 'package:dog_ceo/features/subBreed/domain/repositories/sub_breed_repository.dart';
@@ -29,4 +33,12 @@ Future<void> initializeDependencies() async {
       SubBreedRepositoryImpl(networkSource: sl<SubBreedNetworkSource>()));
   sl.registerFactory<SubBreedBloc>(
       () => SubBreedBloc(subBreedRepository: sl<SubBreedRepository>()));
+
+  /*image feature*/
+  sl.registerSingleton<ImageRemoteSource>(
+      ImageRemoteSource(dio: sl<DioClient>()));
+  sl.registerSingleton<ImageRepository>(
+      ImageRepositoryImpl(remoteSource: sl<ImageRemoteSource>()));
+  sl.registerFactory<ImageBloc>(
+      () => ImageBloc(imageRepository: sl<ImageRepository>()));
 }

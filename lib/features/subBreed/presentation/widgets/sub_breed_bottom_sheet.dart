@@ -53,6 +53,7 @@ class _SubBreedBottomSheetState extends State<SubBreedBottomSheet> {
                           itemBuilder: (context, index) {
                             return SubBreedItem(
                               subBreedName: subBreedList[index],
+                              breedName: widget.dogName
                             );
                           }),
                     ],
