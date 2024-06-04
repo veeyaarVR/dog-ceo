@@ -31,12 +31,3 @@ class FetchDogsSuccess extends DogState {
   @override
   List<Object?> get props => [];
 }
-
-class ShowBreedBottomSheet extends DogState {
-  final String dogName;
-
-  ShowBreedBottomSheet({required this.dogName});
-
-  @override
-  List<Object?> get props => [dogName];
-}

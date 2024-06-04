@@ -17,10 +17,13 @@ class SubBreedNetworkSource {
         /// if success, get data from message object
 
         try {
-          List<String> subBreedList = response["message"];
-
-          if (subBreedList.isNotEmpty) {
-            return DataSuccess(subBreedList);
+          List<dynamic> subBreedList = response["message"];
+          List<String> dataList = [];
+          for (var element in subBreedList) {
+            dataList.add(element.toString());
+          }
+          if (dataList.isNotEmpty) {
+            return DataSuccess(dataList);
           } else {
             return DataFailed(errorMessage: "No Sub-breeds found");
           }

@@ -24,9 +24,5 @@ class DogBloc extends Bloc<DogEvent, DogState> {
         emit(FetchDogsSuccess(dogsGroupedByName: dogsListDataState.data ?? {}));
       }
     });
-
-    on<DogSelected>((event, emit) {
-      emit(ShowBreedBottomSheet(dogName: event.selectedDogName));
-    });
   }
 }

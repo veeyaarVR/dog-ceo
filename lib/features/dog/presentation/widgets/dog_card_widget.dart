@@ -1,19 +1,24 @@
 import 'dart:math';
 
+import 'package:dog_ceo/features/subBreed/presentation/widgets/sub_breed_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class DogCardWidget extends StatelessWidget {
   final String dogName;
-  final DogSelectedCallBack onDogClicked;
 
-  const DogCardWidget(
-      {super.key, required this.dogName, required this.onDogClicked});
+  const DogCardWidget({super.key, required this.dogName});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onDogClicked(dogName);
+        showModalBottomSheet<void>(
+          context: context,
+          isDismissible: true,
+          builder: (BuildContext context) {
+            return SubBreedBottomSheet(dogName: dogName);
+          },
+        );
       },
       child: Container(
           decoration: BoxDecoration(
@@ -30,5 +35,3 @@ class DogCardWidget extends StatelessWidget {
     );
   }
 }
-
-typedef DogSelectedCallBack = void Function(String selectedDog);

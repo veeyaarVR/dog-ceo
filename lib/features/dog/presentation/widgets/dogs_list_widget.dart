@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 
 class DogsListWidget extends StatelessWidget {
   final Map<String, List<String>> dataList;
-  final DogSelectedCallBack onDogClicked;
 
-  const DogsListWidget(
-      {super.key, required this.dataList, required this.onDogClicked});
+  const DogsListWidget({super.key, required this.dataList});
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +39,7 @@ class DogsListWidget extends StatelessWidget {
                                   crossAxisCount: 2),
                           itemCount: dogNames.length,
                           itemBuilder: (context, index) {
-                            return DogCardWidget(
-                              dogName: dogNames[index],
-                              onDogClicked: onDogClicked,
-                            );
+                            return DogCardWidget(dogName: dogNames[index]);
                           }))
                 ],
               ),

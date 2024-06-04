@@ -1,6 +1,5 @@
 import 'package:dog_ceo/features/dog/presentation/bloc/dog_bloc.dart';
 import 'package:dog_ceo/features/dog/presentation/widgets/dogs_list_widget.dart';
-import 'package:dog_ceo/features/subBreed/presentation/widgets/sub_breed_bottom_sheet.dart';
 import 'package:dog_ceo/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,16 +28,6 @@ class _DogHomeScreenState extends State<DogHomeScreen> {
                   dataList = state.dogsGroupedByName;
                 });
               }
-              if (state is ShowBreedBottomSheet) {
-                showModalBottomSheet<void>(
-                  context: context,
-                  isScrollControlled: true,
-                  isDismissible: false,
-                  builder: (BuildContext context) {
-                    return SubBreedBottomSheet(dogName: state.dogName);
-                  },
-                );
-              }
             },
             child: BlocBuilder<DogBloc, DogState>(
               builder: (context, state) {
@@ -65,10 +54,6 @@ class _DogHomeScreenState extends State<DogHomeScreen> {
                           Expanded(
                               child: DogsListWidget(
                             dataList: dataList,
-                            onDogClicked: (selectedDogName) {
-                              BlocProvider.of<DogBloc>(context).add(DogSelected(
-                                  selectedDogName: selectedDogName));
-                            },
                           )),
                         ],
                       ),
