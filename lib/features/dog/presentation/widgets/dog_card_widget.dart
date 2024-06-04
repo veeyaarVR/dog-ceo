@@ -1,20 +1,19 @@
 import 'dart:math';
 
-import 'package:dog_ceo/features/dog/presentation/bloc/dog_bloc.dart';
-import 'package:dog_ceo/injection_container.dart';
 import 'package:flutter/material.dart';
 
 class DogCardWidget extends StatelessWidget {
   final String dogName;
+  final DogSelectedCallBack onDogClicked;
 
-  const DogCardWidget({super.key, required this.dogName});
+  const DogCardWidget(
+      {super.key, required this.dogName, required this.onDogClicked});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        sl<DogBloc>().add(DogSelected(selectedDogName: dogName));
-        // onDogClicked(dogName);
+        onDogClicked(dogName);
       },
       child: Container(
           decoration: BoxDecoration(
@@ -31,3 +30,5 @@ class DogCardWidget extends StatelessWidget {
     );
   }
 }
+
+typedef DogSelectedCallBack = void Function(String selectedDog);

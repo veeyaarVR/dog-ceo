@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dog_ceo/core/resources/data_state.dart';
 import 'package:dog_ceo/features/dog/domain/repositories/dog_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 
 part 'dog_event.dart';
 
@@ -27,7 +26,6 @@ class DogBloc extends Bloc<DogEvent, DogState> {
     });
 
     on<DogSelected>((event, emit) {
-      debugPrint("came here");
       emit(ShowBreedBottomSheet(dogName: event.selectedDogName));
     });
   }
