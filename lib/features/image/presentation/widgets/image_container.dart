@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class ImageContainer extends StatelessWidget {
   final String imageURL;
@@ -9,23 +10,27 @@ class ImageContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        child: Image.network(fit: BoxFit.fitWidth, imageURL, loadingBuilder:
-            (BuildContext context, Widget child,
-                ImageChunkEvent? loadingProgress) {
-          if (loadingProgress?.cumulativeBytesLoaded.toString() ==
-              loadingProgress?.expectedTotalBytes.toString()) {
-            return child;
-          } else {
-            return SizedBox(
-              height: 200,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-        }),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            child: Container(
+              height: 400,
+              width: double.infinity,
+              color: Colors.blueGrey[100],
+            ),
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            child: FadeInImage.memoryNetwork(
+              fit: BoxFit.cover,
+              placeholder: kTransparentImage,
+              image: imageURL,
+              height: 400,
+              width: double.infinity,
+            ),
+          ),
+        ],
       ),
     );
   }

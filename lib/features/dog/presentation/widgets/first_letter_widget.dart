@@ -9,9 +9,10 @@ class FirstLetterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
+      radius: 25,
       child: Text(
         text,
-        style: Theme.of(context).textTheme.headlineLarge,
+        style: Theme.of(context).textTheme.headlineMedium,
       ),
     );
   }

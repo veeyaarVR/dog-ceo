@@ -18,70 +18,100 @@ class _ImageScreenState extends State<ImageScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-            elevation: 10,
-            title: Text("Random Image"),
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: const Icon(
-                  Icons.arrow_back,
-                  size: 28,
+        body: Padding(
+          padding: const EdgeInsets.only(top: 25.0, left: 10.0, right: 10.0),
+          child: Column(
+            children: [
+              _customAppBar(),
+              BlocProvider(
+                create: (context) => sl<ImageBloc>()
+                  ..add(FetchRandomImage(breedName: widget.breedName)),
+                child: BlocBuilder<ImageBloc, ImageState>(
+                  builder: (context, state) {
+                    switch (state) {
+                      case FetchImageSuccess():
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ImageContainer(imageURL: state.imageURL),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Flexible(
+                                    child: Text(
+                                      "${widget.breedName.toUpperCase()} BREED",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      case FetchImageFailure():
+                        return _failureMessage(state.errorMessage);
+                      case FetchImageLoading():
+                        return _progressLoader();
+                      default:
+                        return Container();
+                    }
+                  },
                 ),
               ),
-            )),
-        body: BlocProvider(
-          create: (context) => sl<ImageBloc>()
-            ..add(FetchRandomImage(breedName: widget.breedName)),
-          child: BlocBuilder<ImageBloc, ImageState>(
-            builder: (context, state) {
-              switch (state) {
-                case FetchImageSuccess():
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            widget.breedName.toUpperCase(),
-                            style: Theme.of(context).textTheme.displaySmall,
-                          ),
-                          ImageContainer(imageURL: state.imageURL)
-                        ],
-                      ),
-                    ),
-                  );
-                case FetchImageFailure():
-                  return _failureMessage(state.errorMessage);
-                case FetchImageLoading():
-                  return _progressLoader();
-                default:
-                  return Container();
-              }
-            },
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _progressLoader() {
-    return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+  Widget _customAppBar() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CircularProgressIndicator(),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text('fetching image'),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Icon(
+              Icons.arrow_back,
+              size: 30,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            "Breed Details",
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
         )
       ],
-    ));
+    );
+  }
+
+  Widget _progressLoader() {
+    return Expanded(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('fetching image'),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _failureMessage(String message) {
