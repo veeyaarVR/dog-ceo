@@ -18,8 +18,11 @@ class SubBreedItem extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          GoRouter.of(context)
-              .pushNamed(AppRouteConstants.imageScreen, extra: breedName);
+          Map<String, String> pathParams = {};
+          pathParams['breed'] = breedName;
+          pathParams['sub_breed'] = subBreedName;
+          GoRouter.of(context).pushNamed(AppRouteConstants.imageScreen,
+              queryParameters: pathParams);
         },
         child: Container(
           decoration: BoxDecoration(

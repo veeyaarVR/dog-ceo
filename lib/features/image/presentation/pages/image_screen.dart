@@ -6,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ImageScreen extends StatefulWidget {
   final String breedName;
+  final String subBreedName;
 
-  const ImageScreen(this.breedName, {super.key});
+  const ImageScreen(this.breedName, this.subBreedName, {super.key});
 
   @override
   State<ImageScreen> createState() => _ImageScreenState();
@@ -40,13 +41,26 @@ class _ImageScreenState extends State<ImageScreen> {
                               children: [
                                 ImageContainer(imageURL: state.imageURL),
                                 Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, right: 8.0, top: 16.0),
                                   child: Flexible(
                                     child: Text(
-                                      "${widget.breedName.toUpperCase()} BREED",
+                                      widget.breedName,
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Flexible(
+                                    child: Text(
+                                      widget.subBreedName,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
                                     ),
                                   ),
                                 ),

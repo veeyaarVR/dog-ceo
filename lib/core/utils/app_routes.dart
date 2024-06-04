@@ -17,12 +17,12 @@ class AppRoutes {
         name: AppRouteConstants.imageScreen,
         path: '/image',
         pageBuilder: (context, state) {
-          String breedName = state.extra as String;
+          Map<String, String> pathParams = state.uri.queryParameters;
+          String breedName = pathParams['breed'] as String;
+          String subBreedName = pathParams['sub_breed'] as String;
           return CustomTransitionPage(
             key: state.pageKey,
-            child: ImageScreen(
-              breedName,
-            ),
+            child: ImageScreen(breedName, subBreedName),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               return FadeTransition(

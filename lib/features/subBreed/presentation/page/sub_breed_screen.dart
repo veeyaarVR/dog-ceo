@@ -22,8 +22,7 @@ class _SubBreedScreenState extends State<SubBreedScreen> {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.only(
-              top: 25.0,left: 10.0, right: 10.0),
+          padding: const EdgeInsets.only(top: 25.0, left: 10.0, right: 10.0),
           child: Column(
             children: [_customAppBar(), Expanded(child: _subBreedsGenerator())],
           ),
@@ -64,7 +63,7 @@ class _SubBreedScreenState extends State<SubBreedScreen> {
         ),
         Expanded(
           child: Text(
-            "${widget.dogName} Sub Breeds",
+            "${widget.dogName} - Sub Breeds",
             style: Theme.of(context).textTheme.headlineMedium,
           ),
         )
