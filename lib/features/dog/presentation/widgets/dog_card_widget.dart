@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:dog_ceo/core/constants/app_route_constants.dart';
+import 'package:dog_ceo/core/utils/color_generator_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,7 +20,7 @@ class DogCardWidget extends StatelessWidget {
       },
       child: Container(
           decoration: BoxDecoration(
-              color: Colors.accents[Random().nextInt(Colors.accents.length)],
+              color: ColorGeneratorHelper().generateColorByString(dogName),
               borderRadius: BorderRadius.all(Radius.circular(10))),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
