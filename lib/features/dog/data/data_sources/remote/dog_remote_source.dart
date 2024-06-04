@@ -12,7 +12,7 @@ class DogRemoteSource {
     try {
       Map<String, dynamic> response = await dio.get(getAllDogs);
 
-      if (isApiSuccess(response)) {
+      if (dio.isApiSuccess(response)) {
         /// if success, get all the keys from message object
         Map<String, dynamic> message = response["message"];
         Iterable<String> dogKeysList =
@@ -42,7 +42,3 @@ class DogRemoteSource {
   }
 }
 
-bool isApiSuccess(Map<String, dynamic> responseJson) {
-  String status = responseJson["status"];
-  return status == "success";
-}

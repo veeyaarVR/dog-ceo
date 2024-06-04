@@ -182,4 +182,11 @@ class DioClient {
       throw InternetConnectionException();
     }
   }
+
+  bool isApiSuccess(Map<String, dynamic> responseJson) {
+    String status = responseJson["status"];
+    return status == "success";
+  }
+
+
 }
