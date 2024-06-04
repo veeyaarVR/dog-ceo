@@ -3,6 +3,10 @@ import 'package:dog_ceo/features/dog/data/data_sources/remote/dog_remote_source.
 import 'package:dog_ceo/features/dog/data/repositories/dog_repository_impl.dart';
 import 'package:dog_ceo/features/dog/domain/repositories/dog_repository.dart';
 import 'package:dog_ceo/features/dog/presentation/bloc/dog_bloc.dart';
+import 'package:dog_ceo/features/subBreed/data/repositories/sub_breed_repository_impl.dart';
+import 'package:dog_ceo/features/subBreed/data/sources/remote/sub_breed_network_source.dart';
+import 'package:dog_ceo/features/subBreed/domain/repositories/sub_breed_repository.dart';
+import 'package:dog_ceo/features/subBreed/presentation/bloc/sub_breed_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -17,4 +21,12 @@ Future<void> initializeDependencies() async {
       DogRepositoryImpl(remoteSource: sl<DogRemoteSource>()));
   sl.registerFactory<DogBloc>(
       () => DogBloc(dogRepository: sl<DogRepository>()));
+
+  /*subBreed feature*/
+  sl.registerSingleton<SubBreedNetworkSource>(
+      SubBreedNetworkSource(dio: sl<DioClient>()));
+  sl.registerSingleton<SubBreedRepository>(
+      SubBreedRepositoryImpl(networkSource: sl<SubBreedNetworkSource>()));
+  sl.registerFactory<SubBreedBloc>(
+      () => SubBreedBloc(subBreedRepository: sl<SubBreedRepository>()));
 }
