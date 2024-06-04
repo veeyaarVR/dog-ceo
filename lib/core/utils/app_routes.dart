@@ -1,6 +1,8 @@
 import 'package:dog_ceo/core/constants/app_route_constants.dart';
 import 'package:dog_ceo/features/dog/presentation/pages/dog_home.dart';
 import 'package:dog_ceo/features/image/presentation/pages/image_screen.dart';
+import 'package:dog_ceo/features/subBreed/presentation/page/sub_breed_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {
@@ -14,9 +16,43 @@ class AppRoutes {
       GoRoute(
         name: AppRouteConstants.imageScreen,
         path: '/image',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           String breedName = state.extra as String;
-          return ImageScreen(breedName);
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: ImageScreen(
+              breedName,
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            },
+          );
+        },
+      ),
+      GoRoute(
+        name: AppRouteConstants.subBreedScreen,
+        path: '/subBreed',
+        pageBuilder: (context, state) {
+          String dogName = state.extra as String;
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: SubBreedScreen(
+              dogName: dogName,
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            },
+          );
         },
       ),
     ],

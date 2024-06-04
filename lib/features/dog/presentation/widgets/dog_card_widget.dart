@@ -1,7 +1,8 @@
 import 'dart:math';
 
-import 'package:dog_ceo/features/subBreed/presentation/widgets/sub_breed_bottom_sheet.dart';
+import 'package:dog_ceo/core/constants/app_route_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DogCardWidget extends StatelessWidget {
   final String dogName;
@@ -13,13 +14,8 @@ class DogCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        showModalBottomSheet<void>(
-          context: context,
-          isDismissible: true,
-          builder: (BuildContext context) {
-            return SubBreedBottomSheet(dogName: dogName);
-          },
-        );
+        GoRouter.of(context)
+            .pushNamed(AppRouteConstants.subBreedScreen, extra: dogName);
       },
       child: Container(
           decoration: BoxDecoration(

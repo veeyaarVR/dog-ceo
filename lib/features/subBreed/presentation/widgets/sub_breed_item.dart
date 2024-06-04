@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:dog_ceo/core/constants/app_route_constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,9 +32,19 @@ class SubBreedItem extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(5))),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
-            child: Text(
-              subBreedName,
-              style: Theme.of(context).textTheme.titleLarge,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    subBreedName,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+                const Icon(
+                  Icons.keyboard_arrow_right_rounded,
+                  size: 30,
+                )
+              ],
             ),
           ),
         ),
