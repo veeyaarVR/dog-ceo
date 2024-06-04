@@ -1,6 +1,7 @@
 import 'package:dog_ceo/core/constants/remote_constants.dart';
 import 'package:dog_ceo/core/resources/data_state.dart';
 import 'package:dog_ceo/core/resources/dio_client.dart';
+import 'package:dog_ceo/core/utils/extensions.dart';
 
 class SubBreedNetworkSource {
   final DioClient dio;
@@ -11,7 +12,7 @@ class SubBreedNetworkSource {
   Future<DataState<List<String>>> getSubBreedList(String dogName) async {
     try {
       Map<String, dynamic> response =
-          await dio.get("$getSubBreed/$dogName/list");
+          await dio.get("$getSubBreed/${dogName.toLowerCase()}/list");
 
       if (dio.isApiSuccess(response)) {
         /// if success, get data from message object
@@ -21,7 +22,7 @@ class SubBreedNetworkSource {
 
         // convert to string and add data to list
         for (var element in dataList) {
-          subBreedList.add(element.toString());
+          subBreedList.add(element.toString().capitalize());
         }
 
         // validate list and update DataState

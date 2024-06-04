@@ -1,6 +1,7 @@
 import 'package:dog_ceo/core/constants/remote_constants.dart';
 import 'package:dog_ceo/core/resources/data_state.dart';
 import 'package:dog_ceo/core/resources/dio_client.dart';
+import 'package:dog_ceo/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 class DogRemoteSource {
@@ -28,7 +29,7 @@ class DogRemoteSource {
           // and value as list of dog names that starts with the key value
           String firstLetter = dogName[0];
           List<String> dogsList = dogsMap[firstLetter] ?? [];
-          dogsList.add(dogName);
+          dogsList.add(dogName.capitalize());
           dogsMap[firstLetter] = dogsList;
         }
         debugPrint(dogsMap.toString());

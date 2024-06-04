@@ -64,7 +64,7 @@ class _SubBreedScreenState extends State<SubBreedScreen> {
         ),
         Expanded(
           child: Text(
-            "${widget.dogName} sub breeds",
+            "${widget.dogName} Sub Breeds",
             style: Theme.of(context).textTheme.headlineMedium,
           ),
         )
