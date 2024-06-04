@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:dog_ceo/features/dog/presentation/bloc/dog_bloc.dart';
+import 'package:dog_ceo/features/dog/presentation/widgets/dogs_list_widget.dart';
 import 'package:dog_ceo/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,79 +51,7 @@ class _DogHomeScreenState extends State<DogHomeScreen> {
                           SizedBox(
                             height: 20,
                           ),
-                          Expanded(
-                            child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: dataList.keys.length,
-                                itemBuilder: (context, index) {
-                                  String keyString =
-                                      dataList.keys.toList()[index];
-                                  List<String> dogNames =
-                                      dataList[keyString] ?? [];
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 15.0),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        CircleAvatar(
-                                          child: Text(
-                                            dataList.keys.toList()[index],
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineLarge,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10.0,
-                                        ),
-                                        Expanded(
-                                            child: GridView.builder(
-                                                shrinkWrap: true,
-                                                physics:
-                                                    NeverScrollableScrollPhysics(),
-                                                gridDelegate:
-                                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                                        crossAxisSpacing: 8,
-                                                        mainAxisSpacing: 8,
-                                                        crossAxisCount: 2),
-                                                itemCount: dogNames.length,
-                                                itemBuilder: (context, index) {
-                                                  return Container(
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.accents[
-                                                              Random().nextInt(
-                                                                  Colors.accents
-                                                                      .length)],
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Center(
-                                                            child: Text(
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleMedium,
-                                                                dogNames[
-                                                                    index])),
-                                                      ));
-                                                }))
-                                      ],
-                                    ),
-                                  );
-                                }),
-                          ),
+                          Expanded(child: DogsListWidget(dataList: dataList)),
                         ],
                       ),
                     );
