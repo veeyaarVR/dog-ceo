@@ -1,4 +1,4 @@
-import 'package:dog_ceo/core/constants/constants.dart';
+import 'package:dog_ceo/core/constants/remote_constants.dart';
 import 'package:dog_ceo/core/resources/data_state.dart';
 import 'package:dog_ceo/core/resources/dio_client.dart';
 

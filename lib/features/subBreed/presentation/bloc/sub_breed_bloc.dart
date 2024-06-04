@@ -15,6 +15,7 @@ class SubBreedBloc extends Bloc<SubBreedEvent, SubBreedState> {
       emit(FetchSubBreedLoading());
       var subBreedDataState =
           await subBreedRepository.getSubBreedList(event.dogName);
+      //emit events based on API response
       if (subBreedDataState is DataSuccess) {
         emit(FetchSubBreedSuccess(subBreedList: subBreedDataState.data ?? []));
       } else {

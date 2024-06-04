@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 class DogsListWidget extends StatelessWidget {
   final Map<String, List<String>> dataList;
 
+  /// renders listview with inner list of dog names as gridView
   const DogsListWidget({super.key, required this.dataList});
 
   @override
   Widget build(BuildContext context) {
+    // list view renders alphabets and inner collection of another list
+    // rendered as grid view
     return ListView.builder(
         physics: BouncingScrollPhysics(),
         shrinkWrap: true,
@@ -18,7 +21,6 @@ class DogsListWidget extends StatelessWidget {
               .toList()[index]; // keyStrings contains first letter of name
           List<String> dogNames = dataList[keyString] ??
               []; // dogNames contains list of dogs that starts with [keyString]
-
           return Column(
             children: [
               Row(

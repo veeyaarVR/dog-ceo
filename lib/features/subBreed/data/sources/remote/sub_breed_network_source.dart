@@ -1,4 +1,4 @@
-import 'package:dog_ceo/core/constants/constants.dart';
+import 'package:dog_ceo/core/constants/remote_constants.dart';
 import 'package:dog_ceo/core/resources/data_state.dart';
 import 'package:dog_ceo/core/resources/dio_client.dart';
 
@@ -7,6 +7,7 @@ class SubBreedNetworkSource {
 
   SubBreedNetworkSource({required this.dio});
 
+  /// https://dog.ceo/api/[dogName]/hound/list
   Future<DataState<List<String>>> getSubBreedList(String dogName) async {
     try {
       Map<String, dynamic> response =
@@ -14,13 +15,18 @@ class SubBreedNetworkSource {
 
       if (dio.isApiSuccess(response)) {
         /// if success, get data from message object
-        List<dynamic> subBreedList = response["message"];
-        List<String> dataList = [];
-        for (var element in subBreedList) {
-          dataList.add(element.toString());
+        List<dynamic> dataList =
+            response["message"]; // expect empty or array of dynamic
+        List<String> subBreedList = [];
+
+        // convert to string and add data to list
+        for (var element in dataList) {
+          subBreedList.add(element.toString());
         }
-        if (dataList.isNotEmpty) {
-          return DataSuccess(dataList);
+
+        // validate list and update DataState
+        if (subBreedList.isNotEmpty) {
+          return DataSuccess(subBreedList);
         } else {
           return DataFailed(errorMessage: "No Sub-breeds found");
         }

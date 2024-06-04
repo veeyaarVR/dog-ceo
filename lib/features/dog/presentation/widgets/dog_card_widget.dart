@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class DogCardWidget extends StatelessWidget {
   final String dogName;
 
+  /// renders dog card with dynamic card color
   const DogCardWidget({super.key, required this.dogName});
 
   @override

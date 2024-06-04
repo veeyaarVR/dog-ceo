@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dog_ceo/core/constants/constants.dart';
+import 'package:dog_ceo/core/constants/remote_constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'app_exceptions.dart';

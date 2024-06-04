@@ -11,7 +11,6 @@ class FetchSubBreedSuccess extends SubBreedState {
   final List<String> subBreedList;
 
   FetchSubBreedSuccess({required this.subBreedList});
-
 }
 
 class FetchSubBreedFailure extends SubBreedState {

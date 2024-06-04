@@ -8,6 +8,7 @@ import 'sub_breed_item.dart';
 class SubBreedBottomSheet extends StatefulWidget {
   final String dogName;
 
+  /// Renders Sub Breed screen based on [dogName]
   const SubBreedBottomSheet({super.key, required this.dogName});
 
   @override

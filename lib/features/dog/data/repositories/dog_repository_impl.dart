@@ -1,5 +1,5 @@
 import 'package:dog_ceo/core/resources/data_state.dart';
-import 'package:dog_ceo/features/dog/data/data_sources/remote/dog_remote_source.dart';
+import 'package:dog_ceo/features/dog/data/sources/remote/dog_remote_source.dart';
 import 'package:dog_ceo/features/dog/domain/repositories/dog_repository.dart';
 
 class DogRepositoryImpl extends DogRepository {

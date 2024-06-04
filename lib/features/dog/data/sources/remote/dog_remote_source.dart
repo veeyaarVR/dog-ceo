@@ -1,4 +1,4 @@
-import 'package:dog_ceo/core/constants/constants.dart';
+import 'package:dog_ceo/core/constants/remote_constants.dart';
 import 'package:dog_ceo/core/resources/data_state.dart';
 import 'package:dog_ceo/core/resources/dio_client.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class DogRemoteSource {
       Map<String, dynamic> response = await dio.get(getAllDogs);
 
       if (dio.isApiSuccess(response)) {
-        /// if success, get all the keys from message object
+        // if success, get all the keys from message object
         Map<String, dynamic> message = response["message"];
         Iterable<String> dogKeysList =
             message.keys; // fetching keys because they hold the name of dogs

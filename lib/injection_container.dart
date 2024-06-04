@@ -1,6 +1,6 @@
 import 'package:dog_ceo/core/resources/dio_client.dart';
-import 'package:dog_ceo/features/dog/data/data_sources/remote/dog_remote_source.dart';
 import 'package:dog_ceo/features/dog/data/repositories/dog_repository_impl.dart';
+import 'package:dog_ceo/features/dog/data/sources/remote/dog_remote_source.dart';
 import 'package:dog_ceo/features/dog/domain/repositories/dog_repository.dart';
 import 'package:dog_ceo/features/dog/presentation/bloc/dog_bloc.dart';
 import 'package:dog_ceo/features/image/data/repositories/image_repository_impl.dart';

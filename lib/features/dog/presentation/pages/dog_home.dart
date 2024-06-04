@@ -19,11 +19,13 @@ class _DogHomeScreenState extends State<DogHomeScreen> {
     return SafeArea(
       child: Scaffold(
         body: BlocProvider(
-          create: (context) => sl<DogBloc>()..add(FetchDogsList()),
+          create: (context) => sl<DogBloc>()
+            ..add(FetchDogsList()), // call get dogs API when screen loads
           child: BlocListener<DogBloc, DogState>(
             listener: (context, state) {
               debugPrint("Dog Bloc state is $state");
               if (state is FetchDogsSuccess) {
+                // update list when the api response is success
                 setState(() {
                   dataList = state.dogsGroupedByName;
                 });
