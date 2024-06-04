@@ -9,8 +9,8 @@ class ImageRemoteSource {
 
   Future<DataState<String>> getRandomImage(String breedName) async {
     try {
-      Map<String, dynamic> response =
-          await dio.get("$getImagePrefix${breedName.toLowerCase()}$getImageSuffix");
+      Map<String, dynamic> response = await dio
+          .get("$getImagePrefix${breedName.toLowerCase()}$getImageSuffix");
 
       if (dio.isApiSuccess(response)) {
         /// if success, get data from message object

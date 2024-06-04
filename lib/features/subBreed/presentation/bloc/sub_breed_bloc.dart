@@ -4,7 +4,6 @@ import 'package:dog_ceo/features/subBreed/domain/repositories/sub_breed_reposito
 import 'package:meta/meta.dart';
 
 part 'sub_breed_event.dart';
-
 part 'sub_breed_state.dart';
 
 class SubBreedBloc extends Bloc<SubBreedEvent, SubBreedState> {

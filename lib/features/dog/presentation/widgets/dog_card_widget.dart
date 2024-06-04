@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dog_ceo/core/constants/app_route_constants.dart';
 import 'package:dog_ceo/core/utils/color_generator_helper.dart';
 import 'package:flutter/material.dart';

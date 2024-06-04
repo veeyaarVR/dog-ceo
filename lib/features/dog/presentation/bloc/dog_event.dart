@@ -9,5 +9,3 @@ class FetchDogsList extends DogEvent {
   @override
   List<Object?> get props => [];
 }
-
-

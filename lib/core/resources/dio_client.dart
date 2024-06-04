@@ -187,6 +187,4 @@ class DioClient {
     String status = responseJson["status"];
     return status == "success";
   }
-
-
 }

@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:dog_ceo/core/constants/app_route_constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

@@ -4,7 +4,6 @@ import 'package:dog_ceo/features/image/domain/repositories/image_repository.dart
 import 'package:meta/meta.dart';
 
 part 'image_event.dart';
-
 part 'image_state.dart';
 
 class ImageBloc extends Bloc<ImageEvent, ImageState> {
