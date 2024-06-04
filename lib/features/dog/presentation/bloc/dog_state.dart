@@ -9,7 +9,7 @@ class DogInitial extends DogState {
   List<Object> get props => [];
 }
 
-class NoNetworkState extends DogState {
+class FetchDogsLoading extends DogState {
   @override
   List<Object?> get props => [];
 }

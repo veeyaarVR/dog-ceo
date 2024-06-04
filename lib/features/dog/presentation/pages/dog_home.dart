@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:dog_ceo/core/resources/data_state.dart';
-import 'package:dog_ceo/core/resources/dio_client.dart';
-import 'package:dog_ceo/features/dog/data/data_sources/remote/dog_remote_source.dart';
+import 'package:dog_ceo/features/dog/presentation/bloc/dog_bloc.dart';
+import 'package:dog_ceo/injection_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DogHomeScreen extends StatefulWidget {
   const DogHomeScreen({super.key});
@@ -16,102 +16,144 @@ class _DogHomeScreenState extends State<DogHomeScreen> {
   Map<String, List<String>> dataList = {};
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    doEpicShit();
-  }
-
-  Future<void> doEpicShit() async {
-    var dio = DioClient.instance;
-    var remoteSource = DogRemoteSource(dio);
-    DataState<Map<String, List<String>>> getDogsDataState =
-        await remoteSource.getAllDogsList();
-    if (getDogsDataState is DataSuccess) {
-      setState(() {
-        dataList = getDogsDataState.data ?? {};
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 35.0, horizontal: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Dogs CEO",
-                  style: Theme.of(context).textTheme.headlineLarge),
-              Text(
-                "Collection of open source dog pictures.",
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: dataList.keys.length,
-                    itemBuilder: (context, index) {
-                      String keyString = dataList.keys.toList()[index];
-                      List<String> dogNames = dataList[keyString] ?? [];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 15.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CircleAvatar(
-                              child: Text(
-                                dataList.keys.toList()[index],
-                                style:
-                                    Theme.of(context).textTheme.headlineLarge,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Expanded(
-                                child: GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisSpacing: 8,
-                                            mainAxisSpacing: 8,
-                                            crossAxisCount: 2),
-                                    itemCount: dogNames.length,
-                                    itemBuilder: (context, index) {
-                                      return Container(
-                                          decoration: BoxDecoration(
-                                              color: Colors.accents[Random()
-                                                  .nextInt(
-                                                      Colors.accents.length)],
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Center(
-                                                child: Text(
-                                                    textAlign: TextAlign.center,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium,
-                                                    dogNames[index])),
-                                          ));
-                                    }))
-                          ],
-                        ),
-                      );
-                    }),
-              ),
-            ],
+        body: BlocProvider(
+          create: (context) => sl<DogBloc>()..add(FetchDogsList()),
+          child: BlocListener<DogBloc, DogState>(
+            listener: (context, state) {
+              debugPrint("Dog Bloc state is $state");
+              if (state is FetchDogsSuccess) {
+                setState(() {
+                  dataList = state.dogsGroupedByName;
+                });
+              }
+            },
+            child: BlocBuilder<DogBloc, DogState>(
+              builder: (context, state) {
+                switch (state) {
+                  case FetchDogsLoading():
+                    return _progressLoader();
+                  case FetchDogsFailed():
+                    return _failureMessage(state.errorMessage);
+                  case FetchDogsSuccess():
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                          top: 35.0, left: 20.0, right: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Dogs CEO",
+                              style: Theme.of(context).textTheme.headlineLarge),
+                          Text(
+                            "Collection of open source dog pictures.",
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: dataList.keys.length,
+                                itemBuilder: (context, index) {
+                                  String keyString =
+                                      dataList.keys.toList()[index];
+                                  List<String> dogNames =
+                                      dataList[keyString] ?? [];
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 15.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        CircleAvatar(
+                                          child: Text(
+                                            dataList.keys.toList()[index],
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineLarge,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10.0,
+                                        ),
+                                        Expanded(
+                                            child: GridView.builder(
+                                                shrinkWrap: true,
+                                                physics:
+                                                    NeverScrollableScrollPhysics(),
+                                                gridDelegate:
+                                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisSpacing: 8,
+                                                        mainAxisSpacing: 8,
+                                                        crossAxisCount: 2),
+                                                itemCount: dogNames.length,
+                                                itemBuilder: (context, index) {
+                                                  return Container(
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.accents[
+                                                              Random().nextInt(
+                                                                  Colors.accents
+                                                                      .length)],
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10))),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Center(
+                                                            child: Text(
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleMedium,
+                                                                dogNames[
+                                                                    index])),
+                                                      ));
+                                                }))
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          ),
+                        ],
+                      ),
+                    );
+                  default:
+                    return Container();
+                }
+              },
+            ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _progressLoader() {
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircularProgressIndicator(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('fetching dogs'),
+        )
+      ],
+    ));
+  }
+
+  Widget _failureMessage(String message) {
+    return Center(child: Text(message));
   }
 }
