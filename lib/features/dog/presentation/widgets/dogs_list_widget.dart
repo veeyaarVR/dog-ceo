@@ -39,7 +39,9 @@ class DogsListWidget extends StatelessWidget {
                                   crossAxisCount: 2),
                           itemCount: dogNames.length,
                           itemBuilder: (context, index) {
-                            return DogCardWidget(dogName: dogNames[index]);
+                            return DogCardWidget(
+                              dogName: dogNames[index],
+                            );
                           }))
                 ],
               ),
